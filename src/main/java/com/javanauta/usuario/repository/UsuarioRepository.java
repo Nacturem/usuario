@@ -1,6 +1,6 @@
 package com.javanauta.usuario.repository;
 
-import com.javanauta.demo.infrastructure.entity.Usuario;
+import com.javanauta.usuario.entity.Usuario;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
