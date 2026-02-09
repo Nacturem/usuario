@@ -10,13 +10,14 @@ import java.util.List;
 
 @Getter
 @Setter
-@AllArgsConstructor //construtor com todos argumentos
-@NoArgsConstructor //construtor sem argumentos
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
+@Table(name = "usuario")
 @Builder
-@Table(name = "usuario")//definindo o nome da tablea
-
 public class Usuario implements UserDetails {
+
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) //gerar id automaticamente
     private Long Id;
@@ -48,7 +49,25 @@ public class Usuario implements UserDetails {
     public String getUsername() {
         return email;
     }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
+
 }
-
-
-

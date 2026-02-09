@@ -5,6 +5,7 @@ import com.javanauta.usuario.business.converter.UsuarioConverter;
 import com.javanauta.usuario.business.dto.UsuarioDTO;
 import com.javanauta.usuario.entity.Usuario;
 import com.javanauta.usuario.exceptions.ConflictException;
+import com.javanauta.usuario.exceptions.ResourceNotFoundException;
 import com.javanauta.usuario.repository.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -18,6 +19,7 @@ public class UsuarioService {
     private final UsuarioConverter usuarioConverter;
     private final PasswordEncoder passwordEncoder;
 
+
     public UsuarioDTO salvaUsuario(UsuarioDTO usuarioDTO) {
         emailExiste(usuarioDTO.getEmail());
         usuarioDTO.setSenha(passwordEncoder.encode(usuarioDTO.getSenha()));
@@ -27,6 +29,8 @@ public class UsuarioService {
                 usuarioRepository.save(usuario));
 
     }
+
+
 
     public void emailExiste(String email){
         try{
@@ -46,6 +50,16 @@ public class UsuarioService {
         return usuarioRepository.existsByEmail(email);
 
     }
+    public Usuario buscarUsuarioPorEmail(String email){
+        return usuarioRepository.findByEmail(email).orElseThrow(() -> new ResourceNotFoundException("Email nao encontrado" + email));
+        //.orElseThrow(); caso usuario nao existe, o optiona vai enviar uma mensagem de erro
+    }
+
+    public void deletarUsuarioPorEmail(String email) {
+        usuarioRepository.deleteByEmail(email);
+
+    }
+
 
 
 
