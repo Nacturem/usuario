@@ -100,6 +100,18 @@ public class UsuarioConverter {
                 .build();
     }
 
+    //metodo de update somente do usuario
+    public Usuario updateUsuario(UsuarioDTO usuarioDto, Usuario entity){
+        return Usuario.builder()
+                .nome(usuarioDto.getNome() != null ? usuarioDto.getNome() : entity.getNome())
+                .id(entity.getId())
+                .senha(usuarioDto.getSenha() !=null ? usuarioDto.getSenha() :entity.getSenha())
+                .email(usuarioDto.getEmail() !=null ? usuarioDto.getEmail() : entity.getEmail())
+                .enderecos(entity.getEnderecos())
+                .telefones(entity.getTelefones())
+                .build();
+    }
+
 
 }
 

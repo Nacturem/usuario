@@ -20,7 +20,7 @@ public class Usuario implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) //gerar id automaticamente
-    private Long Id;
+    private Long id;
     @Column(name = "nome", length = 100) //definir o nome da coluna
     private String nome;
     @Column(name = "email", length = 100)

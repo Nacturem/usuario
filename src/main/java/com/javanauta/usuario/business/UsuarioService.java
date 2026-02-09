@@ -6,6 +6,7 @@ import com.javanauta.usuario.business.dto.UsuarioDTO;
 import com.javanauta.usuario.entity.Usuario;
 import com.javanauta.usuario.exceptions.ConflictException;
 import com.javanauta.usuario.exceptions.ResourceNotFoundException;
+import com.javanauta.usuario.infrastructure.security.JwtUtil;
 import com.javanauta.usuario.repository.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -18,6 +19,7 @@ public class UsuarioService {
     private final UsuarioRepository usuarioRepository;
     private final UsuarioConverter usuarioConverter;
     private final PasswordEncoder passwordEncoder;
+    private final JwtUtil jwtutil;
 
 
     public UsuarioDTO salvaUsuario(UsuarioDTO usuarioDTO) {
@@ -60,7 +62,22 @@ public class UsuarioService {
 
     }
 
+    //tira email do token para nao obrigar usuario passar email
+    public UsuarioDTO atualizaDadosUsuario(String token, UsuarioDTO dto){
+        String email = jwtutil.extrairEmailToken(token.substring(7));
 
+        //criptografia de senha
+        dto.setSenha(dto.getSenha() != null? passwordEncoder.encode(dto.getSenha()) : null);
 
+        //busca os dados do usuario no db
+        Usuario usuarioEntity = usuarioRepository.findByEmail(email).orElseThrow(() ->
+         new ResourceNotFoundException("Email nao localizado"));
+        //mescla os dados que recebemos da requisicao dto com db
+        Usuario usuario = usuarioConverter.updateUsuario(dto, usuarioEntity);
+        //coloca criptografia na senha novamente
+
+        return usuarioConverter.paraUsuarioDTO(usuarioRepository.save(usuario));
+
+    }
 
 }
