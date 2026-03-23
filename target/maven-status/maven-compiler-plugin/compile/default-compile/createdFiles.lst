@@ -1,0 +1,16 @@
+com\javanauta\demo\infrastructure\entity\Telefone.class
+com\javanauta\demo\infrastructure\exceptions\ConflictException.class
+com\javanauta\demo\infrastructure\repository\EnderecoRepository.class
+com\javanauta\demo\infrastructure\security\JwtUtil.class
+com\javanauta\demo\infrastructure\security\UserDetailsServiceImpl.class
+com\javanauta\demo\infrastructure\entity\Endereco.class
+com\javanauta\demo\controller\UsuarioController.class
+com\javanauta\demo\AprendendoSpringApplication.class
+com\javanauta\demo\infrastructure\entity\Usuario.class
+com\javanauta\demo\infrastructure\exceptions\ResourceNotFoundException.class
+com\javanauta\demo\controller\dtos\UsuarioDTO.class
+com\javanauta\demo\infrastructure\security\JwtRequestFilter.class
+com\javanauta\demo\infrastructure\security\SecurityConfig.class
+com\javanauta\demo\business\UsuarioService.class
+com\javanauta\demo\infrastructure\repository\TelefoneRepository.class
+com\javanauta\demo\infrastructure\repository\UsuarioRepository.class
