@@ -28,6 +28,7 @@ public class UsuarioService {
     private final JwtUtil jwtutil;
     private final EnderecoRepository enderecoRepository;
     private final TelefoneRepository telefoneRepository;
+    private static final String EMAIL_NAO_ENCONTRADO = "Email nao encontrado:";
 
 
     public UsuarioDTO salvaUsuario(UsuarioDTO usuarioDTO) {
@@ -45,12 +46,12 @@ public class UsuarioService {
         try {
             boolean existe = verificaEmailExistente(email);
             if (existe) {
-                throw new ConflictException("Email já cadastrado" + email);
+                throw new ConflictException(EMAIL_NAO_ENCONTRADO + email);
 
             }
 
         } catch (ConflictException e) {
-            throw new ConflictException("Email já cadastrado " + e.getCause());
+            throw new ConflictException(EMAIL_NAO_ENCONTRADO + e.getCause());
         }
 
     }
@@ -66,10 +67,10 @@ public class UsuarioService {
             return usuarioConverter.paraUsuarioDTO(
                     usuarioRepository.findByEmail(email)
                             .orElseThrow(() ->
-                            new ResourceNotFoundException("Email nao encontrado" + email)));
+                            new ResourceNotFoundException(EMAIL_NAO_ENCONTRADO + email)));
             //.orElseThrow(); caso usuario nao existe, o optiona vai enviar uma mensagem de erro
         } catch (ResourceNotFoundException e) {
-            throw new ResourceNotFoundException("Email nao encontrado " + email);
+            throw new ResourceNotFoundException(EMAIL_NAO_ENCONTRADO + email);
         }
     }
 
@@ -87,7 +88,7 @@ public class UsuarioService {
 
         //busca os dados do usuario no db
         Usuario usuarioEntity = usuarioRepository.findByEmail(email).orElseThrow(() ->
-                new ResourceNotFoundException("Email nao localizado"));
+                new ResourceNotFoundException(EMAIL_NAO_ENCONTRADO));
         //mescla os dados que recebemos da requisicao dto com db
         Usuario usuario = usuarioConverter.updateUsuario(dto, usuarioEntity);
         //coloca criptografia na senha novamente
